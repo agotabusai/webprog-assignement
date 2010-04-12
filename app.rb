@@ -6,32 +6,41 @@ require 'erb'
 enable :sessions
 
 get "/" do
-    erb :homelogin
+    erb :home
 end
 
 post "/login" do
     if params[:user]=="bgotti" and params[:pass]=="jelszo"
 	session[:logged_in]=true
+	session[:notice]="Sikeres bejelentkezes!"
 	redirect "/titok"
     else
-	redirect "/hiba"
+	session[:error]="Hibas felhasznalonev vagy jelszo!"
+	redirect "/"
     end
+end
+
+get "/logout" do
+    session[:logged_in]=nil
+    session[:notice]="Sikeres kijelentkezes!"
+    redirect "/"
 end
 
 get "/titok" do
     if session[:logged_in]
-	erb :titok
+	erb "<h2>...titok..</h2>"
     else
-	redirect "/hiba"
+	session[:error]="Nem vagy bejelentkezve!"
+	redirect "/"
     end
 end
 
-post "/hiba" do
-    erb :hiba
-end
+# eddig tart, ami gyakon volt...
 
+#get "/" do
+#    erb :homehi
+#end
 
-# eddig tart, ami gyakon van
 get "/hi" do
     "<h1>Hello, World!</h1>"
 end
