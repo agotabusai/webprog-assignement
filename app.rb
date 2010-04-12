@@ -26,9 +26,10 @@ get "/titok" do
     end
 end
 
-get "/hiba" do
+post "/hiba" do
     erb :hiba
 end
+
 
 # eddig tart, ami gyakon van
 get "/hi" do
